@@ -35,7 +35,7 @@ class Registrant(Base):
     tag_id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
 
     name: Mapped[str] = mapped_column(String(150), nullable=False)
-    reg_class: Mapped[str] = mapped_column(String(30), nullable=False)  # baby | alpha | youth | speakers_ministers
+    reg_class: Mapped[str] = mapped_column(String(30), nullable=False)  # toddlers | pre_teen | teen_young_adults | guest_ministers
 
     phone: Mapped[str | None] = mapped_column(String(30), nullable=True, index=True)
     parent_phone: Mapped[str | None] = mapped_column(String(30), nullable=True)

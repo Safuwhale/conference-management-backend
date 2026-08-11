@@ -5,10 +5,10 @@ from pydantic import BaseModel, ConfigDict
 
 
 class RegClass(str, Enum):
-    baby = "baby"
-    alpha = "alpha"
-    youth = "youth"
-    speakers_ministers = "speakers_ministers"
+    toddlers = "toddlers"
+    pre_teen = "pre_teen"
+    teen_young_adults = "teen_young_adults"
+    guest_ministers = "guest_ministers"
 
 
 # ---------- Auth ----------
