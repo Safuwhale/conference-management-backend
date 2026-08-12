@@ -14,13 +14,14 @@ from app.models import Staff
 
 STAFF_USERNAMES = [
     "Nandom",
+    "admin",
     "Vincent",
     "Asa",
     "Laura",
     "Sally",
     "Njamba",
-    "staff7",
-    "staff8",
+    "Elvis",
+    "Samuel",
 ]
 DEFAULT_PASSWORD = "admin"
 
