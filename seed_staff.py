@@ -18,7 +18,7 @@ STAFF_USERNAMES = [
     "Asa",
     "Laura",
     "Sally",
-    "staff6",
+    "Njamba",
     "staff7",
     "staff8",
 ]

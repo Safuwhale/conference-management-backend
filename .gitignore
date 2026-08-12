@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 .env
 *:Zone.Identifier
+reset_db.py
+seed_staff.py
+create_tables.py

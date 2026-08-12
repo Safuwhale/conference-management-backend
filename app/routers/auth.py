@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth import create_access_token, verify_password
@@ -12,7 +12,9 @@ router = APIRouter(tags=["auth"])
 
 @router.post("/login", response_model=LoginResponse)
 async def login(payload: LoginRequest, db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Staff).where(Staff.username == payload.username))
+    # Case-insensitive match: "Nandom", "nandom", "NANDOM" all find the same
+    # account, matching how usernames read on a login screen.
+    result = await db.execute(select(Staff).where(func.lower(Staff.username) == payload.username.lower()))
     staff = result.scalar_one_or_none()
 
     if staff is None or not verify_password(payload.password, staff.password_hash):
