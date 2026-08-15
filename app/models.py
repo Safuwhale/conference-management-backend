@@ -88,8 +88,12 @@ class Attendance(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     registrant_id: Mapped[int] = mapped_column(ForeignKey("registrants.tag_id", ondelete="CASCADE"), nullable=False)
-    event_id: Mapped[int] = mapped_column(ForeignKey("events.id", ondelete="CASCADE"), nullable=False)
-
+     # index=True: the (registrant_id, event_id) unique constraint above leads
+    # with registrant_id, which serves lookups like "this person's history"
+    # well but doesn't help "everyone in event X" (the roster/export query),
+    # since that filters on event_id alone. This second index covers that
+    # pattern directly instead of forcing a full table scan.
+    event_id: Mapped[int] = mapped_column(ForeignKey("events.id", ondelete="CASCADE"), nullable=False, index=True)
     marked_by_id: Mapped[int | None] = mapped_column(ForeignKey("staff.id"), nullable=True)
     marked_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 

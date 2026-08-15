@@ -252,3 +252,47 @@ class PaymentUpdate(BaseModel):
 class MarkAttendanceRequest(BaseModel):
     tag_id: int
     event_id: int
+    
+class RosterEntry(BaseModel):
+    """One row for an event's roster - a registrant plus their check-in
+    details for that specific event. Used by the roster page and its
+    CSV/PDF export."""
+    tag_id: int
+    first_name: str
+    middle_name: str | None
+    last_name: str
+    reg_class: RegClass
+    phone: str | None
+    parent_phone: str | None
+    emergency_contact: str | None
+    age: int | None
+    camp_paid: bool
+    camp_amount: float | None
+    conference_paid: bool
+    conference_amount: float | None
+    checked_in_at: datetime
+    checked_in_by: str | None = None
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class RegistrantListEntry(BaseModel):
+    """One row for the all-members list/export - every registrant,
+    independent of any single event."""
+    tag_id: int
+    first_name: str
+    middle_name: str | None
+    last_name: str
+    reg_class: RegClass
+    phone: str | None
+    parent_phone: str | None
+    emergency_contact: str | None
+    address: str | None
+    age: int | None
+    camp_paid: bool
+    camp_amount: float | None
+    conference_paid: bool
+    conference_amount: float | None
+    registered_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)

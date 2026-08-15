@@ -14,6 +14,7 @@ from app.schemas import (
     RegistrantDetail,
     AttendanceRecord,
     PaymentUpdate,
+    RegistrantListEntry,
 )
 
 router = APIRouter(prefix="/registrants", tags=["registrants"])
@@ -72,6 +73,16 @@ async def register_attendee(
 
     await db.refresh(registrant)
     return registrant
+
+
+@router.get("", response_model=list[RegistrantListEntry])
+async def list_all_registrants(db: AsyncSession = Depends(get_db), staff: Staff = Depends(get_current_staff)):
+    # Full roster for the "All Members" export - every registrant,
+    # independent of any single event. At this app's scale (up to ~500
+    # rows) a single unfiltered select is simplest and fast; no pagination
+    # needed for a dataset this size.
+    result = await db.execute(select(Registrant).order_by(Registrant.first_name, Registrant.last_name))
+    return result.scalars().all()
 
 
 @router.get("/search", response_model=list[RegistrantSummary])
